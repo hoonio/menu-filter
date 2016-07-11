@@ -4,26 +4,24 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      personSelected: ['John Davis']
+      personSelected: []
     }
   }
 
   componentDidMount() {
     // this.props.getStockList()
-    console.log('Rest mount')
   }
 
   checkboxTicked(personTicked) {
-    // query if the name is already in a
-    // update state by adding person's name,
-    console.log(personTicked)
-    console.log(this.state.personSelected)
-  }
-
-  onchangetest() {
-    // query if the name is already in a
-    // update state by adding person's name,
-    console.log('onchange triggered')
+    let filterState = this.state.personSelected;
+    const personInArray = filterState.indexOf(personTicked);
+    if (personInArray == -1) { // person not previously selected
+      filterState.push(personTicked);
+    }
+    else {
+      filterState.splice(personInArray,1) // remove the person from the array
+    }
+    this.setState({personSelected: filterState})
   }
 
   render() {
@@ -70,14 +68,14 @@ export default class extends React.Component {
     if (jsonPpl) {
       listPeople = (jsonPpl.map((person, index) => {
         return <div key={index}>
-          <input type="checkbox" id="cbox1" value="first_checkbox" onClick={this.checkboxTicked} />{person.name}
+          <input type="checkbox" id={index} value="first_checkbox" onClick={this.checkboxTicked.bind(this, person.name)} />{person.name}
         </div>
       }))
     }
 
     return <div>
       {listPeople}
-      <input type="text" id="cbox1" onChange={this.onchangetest} />
+      <div>{this.state.personSelected}</div>
     </div>;
   }
 }
