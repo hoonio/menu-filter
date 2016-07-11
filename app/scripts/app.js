@@ -9,7 +9,7 @@ import { render } from 'react-dom'
 // import { Provider } from 'react-redux'
 // import { routerReducer, routerMiddleware, syncHistoryWithStore } from 'react-router-redux'
 
-import Restaurants from './Restaurants'
+import Main from './Main'
 
 // const store = createStore(
 //     combineReducers({
@@ -29,6 +29,6 @@ import Restaurants from './Restaurants'
 // const history = syncHistoryWithStore(browserHistory, store)
 //
 render(
-  <Restaurants></Restaurants>,
+  <Main></Main>,
   document.getElementById('app')
 )

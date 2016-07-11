@@ -1,5 +1,4 @@
-{
-  "people": [
+export const People = [
     {
         "name": "John Davis",
         "wont_eat": ["Fish"],
@@ -35,8 +34,9 @@
         "wont_eat": ["Chinese"],
         "drinks": ["Beer", "cider", "Rum"]
     }
-  ],
-  "venues": [
+  ];
+
+export const Restaurants = [
     {
         "name": "El Cantina",
         "food": ["Mexican"],
@@ -82,5 +82,4 @@
         "food": ["Bread", "Cheese", "Deli"],
         "drinks": ["Soft Drinks", "Tea", "Coffee"]
     },
-  ]
-}
+  ];
