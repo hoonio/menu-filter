@@ -2,8 +2,11 @@ import 'babel-polyfill'
 
 import React from 'react'
 import { render } from 'react-dom'
+import { Provider, connect } from 'react-redux'
+import { createStore } from 'redux'
 // import { Router, browserHistory } from 'react-router'
 
+import lunchFilter from './reducers'
 // import { createStore, compose, applyMiddleware, combineReducers } from 'redux'
 // import thunkMiddleware from 'redux-thunk'
 // import { Provider } from 'react-redux'
@@ -28,7 +31,11 @@ import Main from './Main'
 //
 // const history = syncHistoryWithStore(browserHistory, store)
 //
+
+
 render(
-  <Main></Main>,
+  <Provider store={createStore(lunchFilter)}>
+    <Main />
+  </Provider>,
   document.getElementById('app')
 )

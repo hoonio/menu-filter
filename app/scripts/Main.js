@@ -1,7 +1,10 @@
 import React from 'react'
-import { People, Restaurants } from '../data'
+import { Provider, connect } from 'react-redux'
 
-export default class extends React.Component {
+import { People, Restaurants } from '../data'
+import { TOGGLE_PERSON, togglePerson } from './actions'
+
+class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,23 +13,24 @@ export default class extends React.Component {
   }
 
   componentDidMount() {
-    // this.props.getStockList()
   }
 
   computePreferences() {
-    
+
   }
 
   checkboxTicked(personTicked) {
-    let filterState = this.state.personSelected;
-    const personInArray = filterState.indexOf(personTicked);
-    if (personInArray == -1) { // person not previously selected
-      filterState.push(personTicked);
-    }
-    else {
-      filterState.splice(personInArray,1) // remove the person from the array
-    }
-    this.setState({personSelected: filterState})
+    this.props.togglePerson()
+
+    // let filterState = this.state.personSelected;
+    // const personInArray = filterState.indexOf(personTicked);
+    // if (personInArray == -1) { // person not previously selected
+    //   filterState.push(personTicked);
+    // }
+    // else {
+    //   filterState.splice(personInArray,1) // remove the person from the array
+    // }
+    // this.setState({personSelected: filterState})
   }
 
   render() {
@@ -74,3 +78,20 @@ export default class extends React.Component {
 const tableStyle = {
   marginTop: '100px'
 }
+
+Main.propTypes = {
+  posts: React.PropTypes.array.isRequired,
+  togglePerson: React.PropTypes.func.isRequired
+}
+
+const mapStateToProps = (state) => {
+  return { people: state.stafflist }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    togglePerson: () => { dispatch(togglePerson()) }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main)
