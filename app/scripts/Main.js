@@ -1,46 +1,28 @@
 import React from 'react'
-import { Provider, connect } from 'react-redux'
+import { connect } from 'react-redux'
 
 import { People, Restaurants } from '../data'
-import { TOGGLE_PERSON, togglePerson } from './actions'
+import { getData, togglePerson } from './actions'
 
 class Main extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      personSelected: []
-    }
+  checkboxTicked(personTicked) {
+    this.props.togglePerson(personTicked)
+    // console.log(this.props.peopleGoing)
+    this.render()
   }
 
   componentDidMount() {
-  }
-
-  computePreferences() {
-
-  }
-
-  checkboxTicked(personTicked) {
-    this.props.togglePerson()
-
-    // let filterState = this.state.personSelected;
-    // const personInArray = filterState.indexOf(personTicked);
-    // if (personInArray == -1) { // person not previously selected
-    //   filterState.push(personTicked);
-    // }
-    // else {
-    //   filterState.splice(personInArray,1) // remove the person from the array
-    // }
-    // this.setState({personSelected: filterState})
+    this.props.getData()
   }
 
   render() {
-    let listPeople, listRestaurants = null;
+    let listPeople, listRestaurants, peopleGoing = null;
 
     if (People) {
       listPeople = (People.map((person, index) => {
         return (
           <div key={index}>
-            <input type="checkbox" id={index} value="first_checkbox" onClick={this.checkboxTicked.bind(this, person.name)} />{person.name}
+            <input type="checkbox" id={index} value="first_checkbox" onClick={this.checkboxTicked.bind(this, person)} />{person.name}
           </div>
         )
       }))
@@ -58,18 +40,26 @@ class Main extends React.Component {
       }))
     }
 
+    if (this.props.peopleGoing) {
+      peopleGoing = '';
+      (this.props.peopleGoing.map((name, index) => {
+        peopleGoing =+ name+', ';
+      }));
+      // console.log(peopleGoing)
+    }
+
     return (
       <div>
         {listPeople}
-        <div>{this.state.personSelected}</div>
-        <table style={tableStyle}>
+        <div>{peopleGoing}</div>
+        <table style={tableStyle}><tbody>
           <tr>
             <td>Restaurant</td>
             <td>Food</td>
             <td>Drinks</td>
           </tr>
           {listRestaurants}
-        </table>
+        </tbody></table>
       </div>
     );
   }
@@ -80,17 +70,21 @@ const tableStyle = {
 }
 
 Main.propTypes = {
-  posts: React.PropTypes.array.isRequired,
-  togglePerson: React.PropTypes.func.isRequired
+  // restaurants: React.PropTypes.array.isRequired,
+  peopleGoing: React.PropTypes.array,
+  togglePerson: React.PropTypes.func.isRequired,
+  getData: React.PropTypes.func
 }
 
 const mapStateToProps = (state) => {
-  return { people: state.stafflist }
+  console.log(state)
+  return { peopleGoing: state.peopleState }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    togglePerson: () => { dispatch(togglePerson()) }
+    getData: () => dispatch(getData()),
+    togglePerson: (personTicked) => { dispatch(togglePerson(personTicked)) }
   }
 }
 

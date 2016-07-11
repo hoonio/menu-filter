@@ -6,7 +6,7 @@ import { Provider, connect } from 'react-redux'
 import { createStore } from 'redux'
 // import { Router, browserHistory } from 'react-router'
 
-import lunchFilter from './reducers'
+import reducer from './reducers'
 // import { createStore, compose, applyMiddleware, combineReducers } from 'redux'
 // import thunkMiddleware from 'redux-thunk'
 // import { Provider } from 'react-redux'
@@ -34,7 +34,7 @@ import Main from './Main'
 
 
 render(
-  <Provider store={createStore(lunchFilter)}>
+  <Provider store={createStore(reducer)}>
     <Main />
   </Provider>,
   document.getElementById('app')
