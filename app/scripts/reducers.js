@@ -1,6 +1,6 @@
 import { TOGGLE_PERSON, REQUEST_DATA, RECEIVE_DATA } from './actions'
 
-export default (state = { peopleState: [], foodAvoid: [], DrinkLike: [], ready: false }, action) => {
+export default (state = { peopleState: [], foodAvoid: [], drinkLike: [], ready: false }, action) => {
 
   switch (action.type) {
     case REQUEST_DATA:
@@ -13,10 +13,14 @@ export default (state = { peopleState: [], foodAvoid: [], DrinkLike: [], ready: 
         peopleState: action.people
       })
     case TOGGLE_PERSON:
-      const newState = updatePeopleState(state.peopleState, action.people)
+      const newPeopleState = updatePeopleState(state.peopleState, action.people);
+      const newFoodAvoid = updateFoodToAvoid(state.peopleState);
+      const newDrinkLike = updateDrinkPref(state.peopleState)
       return Object.assign({}, state, {
         ready: true,
-        peopleState: newState
+        peopleState: newPeopleState,
+        foodAvoid: newFoodAvoid,
+        drinkLike: newDrinkLike
       })
     default:
       return state;
@@ -25,30 +29,9 @@ export default (state = { peopleState: [], foodAvoid: [], DrinkLike: [], ready: 
 
 const updatePeopleState = (peopleState, personToUpdate) => {
   // need to mutate to refresh the state
-  // let peopleState = state.peopleGoing;
   // need to restructure redux state machine, since if I track only the people who are going for sake of data efficiency, I end up having to parse through double nested array which will add further complexity
-  console.log(peopleState);
-  console.log(personToUpdate)
   return peopleState.map(p => Person(p, personToUpdate));
   // if a person is toggled off and if I remove the food he/she won't eat, there may be another person who won't eat that food, but now that food item is removed from foodAvoid, so store the entire people data as state rather than name only
-
-
-  // if (action.person) {
-    // keep track of who is going to lunch
-    // const personInArray = peopleState.indexOf(action.person.name);
-    // if (personInArray == -1) { // person not previously selected
-    //   peopleState.push(action.person.name);
-    // }
-    // else {
-    //   peopleState.splice(personInArray,1) // remove the person from the array
-    // }
-    //
-    // create an array of food to avoid
-  //   let foodState = peopleState.map((person) => {
-  //   })
-  // }
-  // return
-
 }
 
 const Person = (state, action) => {
@@ -62,4 +45,32 @@ const Person = (state, action) => {
     drinks: state.drinks,
     going: !state.going
   };
+}
+
+const updateFoodToAvoid = (peopleState) => {
+  let foodAvoidList = [];
+  peopleState.map((person) => {
+    if (person.going){
+      person.wont_eat.forEach((food) => {
+        if (foodAvoidList.indexOf(food) == -1) {
+          foodAvoidList.push(food)
+        }
+      })
+    }
+  })
+  return foodAvoidList;
+}
+
+const updateDrinkPref = (peopleState) => {
+  let drinkPrefList = [];
+  peopleState.map((person) => {
+    if (person.going){
+      person.drinks.forEach((drink) => {
+        if (drinkPrefList.indexOf(drink) == -1) {
+          drinkPrefList.push(drink)
+        }
+      })
+    }
+  })
+  return drinkPrefList;
 }

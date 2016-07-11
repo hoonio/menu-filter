@@ -8,11 +8,25 @@ class Main extends React.Component {
   checkboxTicked(personTicked) {
     this.props.togglePerson(personTicked)
     // console.log(this.props.peopleGoing)
-    this.render()
+    // this.render()
   }
 
   componentDidMount() {
     this.props.getData()
+  }
+
+  checkIfMeetsCriteria(venue) {
+    let meetsCriteria = true;
+    this.props.peopleGoing.forEach((person) => {
+      if (person.going) {
+        person.wont_eat.forEach((food) => {
+          if (venue.food.indexOf(food) !== -1) {
+            meetsCriteria = false;
+          }
+        })
+      }
+    })
+    return meetsCriteria;
   }
 
   render() {
@@ -30,28 +44,21 @@ class Main extends React.Component {
 
     if (Restaurants) {
       listRestaurants = (Restaurants.map((venue, index) => {
-        return (
-          <tr key={index}>
-            <td>{venue.name}</td>
-            <td>{venue.food}</td>
-            <td>{venue.drinks}</td>
-          </tr>
-        )
+        if (this.checkIfMeetsCriteria(venue)) {
+          return (
+            <tr key={index}>
+              <td>{venue.name}</td>
+              <td>{venue.food}</td>
+              <td>{venue.drinks}</td>
+            </tr>
+          )
+        }
       }))
-    }
-
-    if (this.props.peopleGoing) {
-      peopleGoing = '';
-      (this.props.peopleGoing.map((name, index) => {
-        peopleGoing =+ name+', ';
-      }));
-      // console.log(peopleGoing)
     }
 
     return (
       <div>
         {listPeople}
-        <div>{peopleGoing}</div>
         <table style={tableStyle}><tbody>
           <tr>
             <td>Restaurant</td>
@@ -77,7 +84,7 @@ Main.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state)
+  console.log('state change')
   return { peopleGoing: state.peopleState }
 }
 
