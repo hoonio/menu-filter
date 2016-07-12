@@ -8,33 +8,27 @@ import { createStore } from 'redux'
 
 import reducer from './reducers'
 // import { createStore, compose, applyMiddleware, combineReducers } from 'redux'
-// import thunkMiddleware from 'redux-thunk'
+import thunkMiddleware from 'redux-thunk'
 // import { Provider } from 'react-redux'
 // import { routerReducer, routerMiddleware, syncHistoryWithStore } from 'react-router-redux'
 
 import Main from './Main'
 
-// const store = createStore(
-//     combineReducers({
-//       blog,
-//       portfolio,
-//       canvas,
-//       routing: routerReducer
-//     }),
-//     compose(
-//       applyMiddleware(
-//         thunkMiddleware, // enables dispatch() calls
-//         routerMiddleware(history) // logs actions
-//       )
-//     )
-// )
+const store = createStore(
+    reducer,
+    compose(
+      applyMiddleware(
+        thunkMiddleware, // enables dispatch() calls
+      )
+    )
+)
 //
 // const history = syncHistoryWithStore(browserHistory, store)
 //
 
 
 render(
-  <Provider store={createStore(reducer)}>
+  <Provider store={store}>
     <Main />
   </Provider>,
   document.getElementById('app')
