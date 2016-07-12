@@ -48,7 +48,7 @@ class Main extends React.Component {
   }
 
   render() {
-    let listPeople, listRestaurants, peopleGoing = null;
+    let listPeople, listRestaurants, listPlacesAvoid = null;
 
     if (People) {
       listPeople = (People.map((person, index) => {
@@ -64,11 +64,15 @@ class Main extends React.Component {
       listRestaurants = (Restaurants.map((venue, index) => {
         if (this.checkIfMeetsCriteria(venue)) {
           return (
-            <tr key={index}>
-              <td>{venue.name}</td>
-              <td>{venue.food}</td>
-              <td>{venue.drinks}</td>
-            </tr>
+            <li key={index}>{venue.name}</li>
+          )
+        }
+      }))
+      listPlacesAvoid = (Restaurants.map((venue, index) => {
+        if (!this.checkIfMeetsCriteria(venue)) {
+          console.log(venue)
+          return (
+            <li key={index}>{venue.name}</li>
           )
         }
       }))
@@ -76,15 +80,16 @@ class Main extends React.Component {
 
     return (
       <div>
-        {listPeople}
-        <table style={tableStyle}><tbody>
-          <tr>
-            <td>Restaurant</td>
-            <td>Food</td>
-            <td>Drinks</td>
-          </tr>
-          {listRestaurants}
-        </tbody></table>
+        <div>
+          <p>Select team members attending</p>
+          {listPeople}
+        </div>
+        <div>
+          <p>Places to go:</p>
+          <ul>{listRestaurants}</ul>
+          <p>Places to avoid:</p>
+          <ul>{listPlacesAvoid}</ul>
+        </div>
       </div>
     );
   }

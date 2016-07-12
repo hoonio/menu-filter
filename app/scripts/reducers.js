@@ -39,7 +39,6 @@ const Person = (state, action) => {
   if (state.name !== action.name) {
     return state;
   }
-  console.log('found match');
   return {
     name: state.name,
     wont_eat: state.wont_eat,
