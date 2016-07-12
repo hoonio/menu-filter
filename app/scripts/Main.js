@@ -16,12 +16,30 @@ class Main extends React.Component {
   }
 
   checkIfMeetsCriteria(venue) {
+    return (this.checkCriteriaFood(venue) && this.checkCriteriaDrink(venue));
+  }
+
+  checkCriteriaFood(venue) {
     let meetsCriteria = true;
     this.props.peopleGoing.forEach((person) => {
       if (person.going) {
         person.wont_eat.forEach((food) => {
           if (venue.food.indexOf(food) !== -1) {
             meetsCriteria = false;
+          }
+        })
+      }
+    })
+    return meetsCriteria;
+  }
+
+  checkCriteriaDrink(venue) {
+    let meetsCriteria = false;
+    this.props.peopleGoing.forEach((person) => {
+      if (person.going) {
+        person.drinks.forEach((drink) => {
+          if (venue.drinks.indexOf(drink) !== -1) {
+            meetsCriteria = true;
           }
         })
       }

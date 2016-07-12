@@ -3,7 +3,7 @@ import 'babel-polyfill'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider, connect } from 'react-redux'
-import { createStore } from 'redux'
+import { createStore, compose, applyMiddleware } from 'redux'
 // import { Router, browserHistory } from 'react-router'
 
 import reducer from './reducers'
@@ -18,7 +18,7 @@ const store = createStore(
     reducer,
     compose(
       applyMiddleware(
-        thunkMiddleware, // enables dispatch() calls
+        thunkMiddleware // enables dispatch() calls
       )
     )
 )

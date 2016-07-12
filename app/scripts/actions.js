@@ -26,10 +26,10 @@ export const receiveData = (json) => ({
   people: json
 })
 
-// export const getData = () => ({
-//   type: RECEIVE_DATA,
-//   people: initializeData(People)
-// })
+export const getData = () => ({
+  type: RECEIVE_DATA,
+  people: initializeData(People)
+})
 
 // mark all persons as not attending
 export const initializeData = (data) => (
@@ -40,14 +40,15 @@ export const initializeData = (data) => (
 )
 
 
-export const getData = () => {
-  return (dispatch) => {
-    dispatch(requestData())
-    console.log('request data')
-    return fetch('https://api.github.com/gists/0fd0ddf6e0b93b308e0f000b65ae3816')
-    .then(resp => {
-      console.log(resp)
-      dispatch(receiveData(resp.response.posts))
-    })
-  }
-}
+// export const getData = () => {
+//   return (dispatch) => {
+//     dispatch(requestData())
+//     console.log('request data')
+//     // need to implement authentication to retrieve this gist
+//     return fetch('https://api.github.com/gists/0fd0ddf6e0b93b308e0f000b65ae3816')
+//     .then(resp => {
+//       console.log(resp)
+//       dispatch(receiveData(resp.response.posts))
+//     })
+//   }
+// }
