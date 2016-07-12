@@ -16,21 +16,26 @@ class Main extends React.Component {
   }
 
   checkIfMeetsCriteria(venue) {
-    return (this.checkCriteriaFood(venue) && this.checkCriteriaDrink(venue));
+    const listReasonForNotGoing = this.checkCriteriaFood(venue)
+    return ({
+      meetsCriteria: (listReasonForNotGoing.length === 0) && this.checkCriteriaDrink(venue),
+      reasons: listReasonForNotGoing
+    });
   }
 
   checkCriteriaFood(venue) {
-    let meetsCriteria = true;
+    let listReasonForNotGoing = [];
     this.props.peopleGoing.forEach((person) => {
       if (person.going) {
         person.wont_eat.forEach((food) => {
           if (venue.food.indexOf(food) !== -1) {
-            meetsCriteria = false;
+            listReasonForNotGoing.push(person.name.split(' ')[0] + " doesn't eat "+food)
           }
         })
       }
     })
-    return meetsCriteria;
+    console.log(listReasonForNotGoing)
+    return listReasonForNotGoing;
   }
 
   checkCriteriaDrink(venue) {
@@ -61,18 +66,32 @@ class Main extends React.Component {
     }
 
     if (Restaurants) {
+      let criteria = [];
       listRestaurants = (Restaurants.map((venue, index) => {
-        if (this.checkIfMeetsCriteria(venue)) {
+        criteria = this.checkIfMeetsCriteria(venue);
+        if (criteria.meetsCriteria) {
           return (
             <li key={index}>{venue.name}</li>
           )
         }
       }))
       listPlacesAvoid = (Restaurants.map((venue, index) => {
-        if (!this.checkIfMeetsCriteria(venue)) {
+        criteria = this.checkIfMeetsCriteria(venue);
+        if (!criteria.meetsCriteria) {
+          const placeToAvoid = <li key={index}>{venue.name}</li>;
+          const listReasons = criteria.reasons.map((reason, index) => {
+            return (
+              <li key={index}>{reason}</li>
+            )
+          });
           console.log(venue)
           return (
-            <li key={index}>{venue.name}</li>
+            <ul>
+              {placeToAvoid}
+              <ul>
+                {listReasons}
+              </ul>
+            </ul>
           )
         }
       }))
@@ -88,7 +107,7 @@ class Main extends React.Component {
           <p>Places to go:</p>
           <ul>{listRestaurants}</ul>
           <p>Places to avoid:</p>
-          <ul>{listPlacesAvoid}</ul>
+          <div>{listPlacesAvoid}</div>
         </div>
       </div>
     );
