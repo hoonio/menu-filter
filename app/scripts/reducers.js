@@ -8,19 +8,20 @@ export default (state = { peopleState: [], foodAvoid: [], drinkLike: [], ready: 
         ready: false
       })
     case RECEIVE_DATA:
+      console.log(action)
       return Object.assign({}, state, {
         ready: true,
         peopleState: action.people
       })
     case TOGGLE_PERSON:
       const newPeopleState = updatePeopleState(state.peopleState, action.people);
-      const newFoodAvoid = updateFoodToAvoid(state.peopleState);
-      const newDrinkLike = updateDrinkPref(state.peopleState)
+      // const newFoodAvoid = updateFoodToAvoid(state.peopleState);
+      // const newDrinkLike = updateDrinkPref(state.peopleState)
       return Object.assign({}, state, {
         ready: true,
         peopleState: newPeopleState,
-        foodAvoid: newFoodAvoid,
-        drinkLike: newDrinkLike
+        foodAvoid: [],
+        drinkLike: []
       })
     default:
       return state;

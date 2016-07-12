@@ -6,6 +6,7 @@ import { People, Restaurants } from '../data'
 export const TOGGLE_PERSON = 'TOGGLE_PERSON'
 
 export const togglePerson = (personData) => {
+  console.log(personData)
   return {
     type: TOGGLE_PERSON,
     people: personData
@@ -30,7 +31,7 @@ export const getData = () => ({
 })
 
 // mark all persons as not attending
-const initializeData = (data) => (
+export const initializeData = (data) => (
   data.map((person) => {
     person.going = false;
     return person;
