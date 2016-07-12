@@ -4,14 +4,9 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider, connect } from 'react-redux'
 import { createStore, compose, applyMiddleware } from 'redux'
-// import { Router, browserHistory } from 'react-router'
+import thunkMiddleware from 'redux-thunk'
 
 import reducer from './reducers'
-// import { createStore, compose, applyMiddleware, combineReducers } from 'redux'
-import thunkMiddleware from 'redux-thunk'
-// import { Provider } from 'react-redux'
-// import { routerReducer, routerMiddleware, syncHistoryWithStore } from 'react-router-redux'
-
 import Main from './Main'
 
 const store = createStore(
@@ -22,10 +17,6 @@ const store = createStore(
       )
     )
 )
-//
-// const history = syncHistoryWithStore(browserHistory, store)
-//
-
 
 render(
   <Provider store={store}>

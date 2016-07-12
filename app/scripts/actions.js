@@ -1,13 +1,11 @@
 import { dispatch } from 'react-redux'
 import fetch from 'isomorphic-fetch'
 import 'babel-polyfill'
-import jsonp from 'jsonp-es6'
 import { People, Restaurants } from '../data'
 
 export const TOGGLE_PERSON = 'TOGGLE_PERSON'
 
 export const togglePerson = (personData) => {
-  console.log(personData)
   return {
     type: TOGGLE_PERSON,
     people: personData
@@ -39,15 +37,12 @@ export const initializeData = (data) => (
   })
 )
 
-
+// need to implement authentication to retrieve this gist
 // export const getData = () => {
 //   return (dispatch) => {
 //     dispatch(requestData())
-//     console.log('request data')
-//     // need to implement authentication to retrieve this gist
 //     return fetch('https://api.github.com/gists/0fd0ddf6e0b93b308e0f000b65ae3816')
 //     .then(resp => {
-//       console.log(resp)
 //       dispatch(receiveData(resp.response.posts))
 //     })
 //   }

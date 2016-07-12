@@ -7,8 +7,6 @@ import { getData, togglePerson } from './actions'
 class Main extends React.Component {
   checkboxTicked(personTicked) {
     this.props.togglePerson(personTicked)
-    // console.log(this.props.peopleGoing)
-    // this.render()
   }
 
   componentDidMount() {
@@ -34,7 +32,6 @@ class Main extends React.Component {
         })
       }
     })
-    console.log(listReasonForNotGoing)
     return listReasonForNotGoing;
   }
 
@@ -84,7 +81,6 @@ class Main extends React.Component {
               <li key={index}>{reason}</li>
             )
           });
-          console.log(venue)
           return (
             <ul key={index}>
               {placeToAvoid}
@@ -132,7 +128,6 @@ Main.propTypes = {
 }
 
 const mapStateToProps = (state) => {
-  console.log('state change')
   return {
     peopleGoing: state.peopleState,
     dataChanged: state.ready

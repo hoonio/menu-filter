@@ -26,7 +26,7 @@ describe('lunch filter reducer', () => {
     ).toEqual(
       {
         peopleState: expectedInitData,
-        ready: true
+        ready: false
       }
     )
 
@@ -40,7 +40,7 @@ describe('lunch filter reducer', () => {
     ).toEqual(
       {
         peopleState: expectedInitData,
-        ready: true
+        ready: false
       }
     )
 

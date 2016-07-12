@@ -1,6 +1,6 @@
 import { TOGGLE_PERSON, REQUEST_DATA, RECEIVE_DATA } from './actions'
 
-export default (state = { peopleState: [], foodAvoid: [], drinkLike: [], ready: false }, action) => {
+export default (state = { peopleState: [], ready: false }, action) => {
 
   switch (action.type) {
     case REQUEST_DATA:
@@ -8,7 +8,6 @@ export default (state = { peopleState: [], foodAvoid: [], drinkLike: [], ready: 
         ready: false
       })
     case RECEIVE_DATA:
-      console.log(action)
       return Object.assign({}, state, {
         ready: false,
         peopleState: action.people
