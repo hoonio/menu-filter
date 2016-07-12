@@ -10,8 +10,6 @@ describe('lunch filter reducer', () => {
     ).toEqual(
       {
         peopleState: [],
-        foodAvoid: [],
-        drinkLike: [],
         ready: false
       }
     )
@@ -57,8 +55,6 @@ describe('lunch filter reducer', () => {
     ).toEqual(
       {
         peopleState: dataAfterJohnDavisToggle,
-        foodAvoid: [],
-        drinkLike: [],
         ready: true
       }
     )

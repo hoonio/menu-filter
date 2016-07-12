@@ -53,7 +53,7 @@ class Main extends React.Component {
   }
 
   render() {
-    let listPeople, listRestaurants, listPlacesAvoid = null;
+    let listPeople, listRestaurants, listPlacesAvoid, listFilteredResults = null;
 
     if (People) {
       listPeople = (People.map((person, index) => {
@@ -86,7 +86,7 @@ class Main extends React.Component {
           });
           console.log(venue)
           return (
-            <ul>
+            <ul key={index}>
               {placeToAvoid}
               <ul>
                 {listReasons}
@@ -97,17 +97,23 @@ class Main extends React.Component {
       }))
     }
 
-    return (
-      <div>
-        <div>
-          <p>Select team members attending</p>
-          {listPeople}
-        </div>
+    if (this.props.dataChanged){
+      listFilteredResults = (
         <div>
           <p>Places to go:</p>
           <ul>{listRestaurants}</ul>
           <p>Places to avoid:</p>
           <div>{listPlacesAvoid}</div>
+        </div>
+      )
+    }
+
+    return (
+      <div>
+        <div>
+          <p>Select team members attending from below</p>
+          {listPeople}
+          {listFilteredResults}
         </div>
       </div>
     );
@@ -119,15 +125,18 @@ const tableStyle = {
 }
 
 Main.propTypes = {
-  // restaurants: React.PropTypes.array.isRequired,
   peopleGoing: React.PropTypes.array,
+  dataChanged: React.PropTypes.bool,
   togglePerson: React.PropTypes.func.isRequired,
   getData: React.PropTypes.func
 }
 
 const mapStateToProps = (state) => {
   console.log('state change')
-  return { peopleGoing: state.peopleState }
+  return {
+    peopleGoing: state.peopleState,
+    dataChanged: state.ready
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
