@@ -5,8 +5,9 @@ COPY . app/
 WORKDIR app/
 
 # Install app dependencies
-RUN npm install
-RUN gulp build:production
+RUN npm install \
+  && npm install -g gulp \
+  && gulp build:production
 
 EXPOSE 8080
 CMD [ "node", "dist/server.js" ]
